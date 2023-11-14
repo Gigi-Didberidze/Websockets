@@ -36,28 +36,32 @@ class OrderBook:
                 self.print_order_book()
 
             else:
-                # This is an update message
-                print(f"Update received for {self.symbol}")
-                print(f"Update data: {data[1]}")
+                pass
 
-                price, count, amount = data[1]
-                price_key = str(price)
+        else:
+            # This is an update message
+            print(f"Update received for {self.symbol}")
+            print(f"Update data: {data[1]}")
 
-                if count > 0:
-                    # Add or update price level
-                    if amount > 0:
-                        self.order_book['bids'][price_key] = amount
-                    elif amount < 0:
-                        self.order_book['asks'][price_key] = -amount
-                else:
-                    # Delete price level
-                    if amount == 1:
-                        del self.order_book['bids'][price_key]
-                    elif amount == -1:
-                        del self.order_book['asks'][price_key]
+            price, count, amount = data[1]
+            price_key = str(price)
 
-                # Print order book
-                self.print_order_book()
+            if count > 0:
+                # Add or update price level
+                if amount > 0:
+                    self.order_book['bids'][price_key] = amount
+                elif amount < 0:
+                    self.order_book['asks'][price_key] = -amount
+
+            else:
+                # Delete price level
+                if amount == 1:
+                    del self.order_book['bids'][price_key]
+                elif amount == -1:
+                    del self.order_book['asks'][price_key]
+
+            # Print order book
+            self.print_order_book()
 
     def print_order_book(self):
         print(f"Order Book for {self.symbol}:")
