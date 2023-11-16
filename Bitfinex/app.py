@@ -2,6 +2,7 @@ import websocket
 import json
 import threading
 
+
 class OrderBook:
     def __init__(self, symbol):
         self.symbol = symbol
@@ -12,10 +13,18 @@ class OrderBook:
     def on_message(self, ws, message):
         data = json.loads(message)
         
-        if 'event' in data and data['event'] == 'subscribed':
-            print(f"Subscribed to {data['pair']} order book channel")
+        if isinstance(data, dict):
+            if 'event' in data:
+                if data['event'] == 'info':
+                    print(data)
+                elif data['event'] == 'subscribed':
+                    print(f"Subscribed to {data['pair']} order book channel")
+                else:
+                    pass
+            else:
+                pass
 
-        if isinstance(data[1][0], list):
+        elif isinstance(data[1][0], list):
             if not self.initial_snapshot_received:
                 self.initial_snapshot_received = True
                 print(f"Snapshot received for {self.symbol}")
@@ -76,6 +85,7 @@ class OrderBook:
     def stop(self):
         print("Stopping the WebSocket thread...")
         self.stop_event.set()
+
 
 if __name__ == '__main__':
     symbol = 'tBTCUSD'
