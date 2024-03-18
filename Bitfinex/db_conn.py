@@ -9,6 +9,6 @@ class DatabaseConnector:
             port='<portNumber>',
             user='<userName>',
             password='<password>',
-            database='<datanase>'
+            database='<database>'
         )
         return conn
