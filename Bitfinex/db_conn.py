@@ -1,13 +1,14 @@
 import mysql.connector
 
-def connect_to_database():
-    connection = mysql.connector.connect(
-        
-        # Replace the following values with your own database credentials
 
-        host='<hostname>',
-        user='<username>',
-        password='<password>',
-        database='<database>'
-    )
-    return connection
+class DatabaseConnector:
+    @staticmethod
+    def connect_to_database():
+        conn = mysql.connector.connect(
+            host='<hostName>',
+            port='<portNumber>',
+            user='<userName>',
+            password='<password>',
+            database='<datanase>'
+        )
+        return conn
